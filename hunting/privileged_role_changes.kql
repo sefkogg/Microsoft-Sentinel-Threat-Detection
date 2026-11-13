@@ -1,0 +1,7 @@
+// AuditLogs: recent directory role membership changes; verify exact operation names in tenant.
+AuditLogs
+| where TimeGenerated >= ago(7d)
+| where Category == "RoleManagement"
+| where OperationName has_any ("Add member to role", "Remove member from role")
+| project TimeGenerated, OperationName, Result, InitiatedBy, TargetResources, CorrelationId
+| order by TimeGenerated desc

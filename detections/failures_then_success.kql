@@ -1,0 +1,12 @@
+// Multiple failed sign-ins followed by a successful sign-in from the same IP/user.
+let failures = SigninLogs
+| where TimeGenerated between (ago(2h) .. now()) and ResultType != "0"
+| summarize FailureCount=count(), LastFailure=max(TimeGenerated) by IPAddress, UserPrincipalName
+| where FailureCount >= 5;
+let successes = SigninLogs
+| where TimeGenerated >= ago(2h) and ResultType == "0"
+| summarize FirstSuccess=min(TimeGenerated) by IPAddress, UserPrincipalName;
+failures
+| join kind=inner successes on IPAddress, UserPrincipalName
+| where FirstSuccess between (LastFailure .. LastFailure + 30m)
+| project UserPrincipalName, IPAddress, FailureCount, LastFailure, FirstSuccess

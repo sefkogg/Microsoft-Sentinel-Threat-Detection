@@ -1,0 +1,15 @@
+// Compare a user's recent successful sign-in countries with their previous 30-day baseline.
+// Country changes are leads for investigation, not proof of compromise.
+let baseline = SigninLogs
+| where TimeGenerated between (ago(30d) .. ago(1d)) and ResultType == "0"
+| extend Country=tostring(LocationDetails.countryOrRegion)
+| where isnotempty(Country)
+| summarize KnownCountries=make_set(Country, 100) by UserPrincipalName;
+SigninLogs
+| where TimeGenerated >= ago(1d) and ResultType == "0"
+| extend Country=tostring(LocationDetails.countryOrRegion)
+| where isnotempty(Country)
+| join kind=leftouter baseline on UserPrincipalName
+| where isnull(KnownCountries) or not(set_has_element(KnownCountries, Country))
+| project TimeGenerated, UserPrincipalName, IPAddress, Country, KnownCountries
+| order by TimeGenerated desc

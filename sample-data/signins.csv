@@ -1,0 +1,12 @@
+TimeGenerated,UserPrincipalName,IPAddress,ResultType,Country
+2026-11-10T08:00:00Z,alex@example.invalid,192.0.2.10,50126,US
+2026-11-10T08:01:00Z,blair@example.invalid,192.0.2.10,50126,US
+2026-11-10T08:02:00Z,casey@example.invalid,192.0.2.10,50126,US
+2026-11-10T08:03:00Z,drew@example.invalid,192.0.2.10,50126,US
+2026-11-10T08:04:00Z,erin@example.invalid,192.0.2.10,50126,US
+2026-11-10T08:05:00Z,alex@example.invalid,192.0.2.10,50126,US
+2026-11-10T08:06:00Z,blair@example.invalid,192.0.2.10,50126,US
+2026-11-10T08:07:00Z,casey@example.invalid,192.0.2.10,50126,US
+2026-11-10T08:08:00Z,drew@example.invalid,192.0.2.10,50126,US
+2026-11-10T08:09:00Z,erin@example.invalid,192.0.2.10,50126,US
+2026-11-10T08:10:00Z,alex@example.invalid,198.51.100.22,0,US
